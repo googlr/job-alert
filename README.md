@@ -8,3 +8,4 @@
 
 ## Platform, Framework & Tools
 * [ply](https://github.com/blangel/ply)
+* [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.html)
