@@ -15,4 +15,15 @@ public class Application {
         this.applicationDate = new Date();
     }
 
+    Application(String userId, String companyId, Date applicationDate) {
+        this.userId = userId;
+        this.companyId = companyId;
+        this.applicationDate = applicationDate;
+    }
+
+    // User is allowed to correct the date of his/her application
+    public void setApplicationDate(Date newApplicationDate){
+        this.applicationDate = newApplicationDate;
+    }
+
 }
