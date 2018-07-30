@@ -11,7 +11,7 @@ public class Job {
     private String jobDescription;
     private Date jobPostDate;
 
-    Job(String jobId, String jobTitle, String jobCompany, String jobDescription) {
+    public Job(String jobId, String jobTitle, String jobCompany, String jobDescription) {
         this.jobId = jobId;
         this.jobTitle = jobTitle;
         this.jobCompany = jobCompany;

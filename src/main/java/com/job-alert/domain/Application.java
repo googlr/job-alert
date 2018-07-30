@@ -9,13 +9,13 @@ public class Application {
     private String companyId;
     private Date applicationDate;
 
-    Application(String userId, String companyId) {
+    public Application(String userId, String companyId) {
         this.userId = userId;
         this.companyId = companyId;
         this.applicationDate = new Date();
     }
 
-    Application(String userId, String companyId, Date applicationDate) {
+    public Application(String userId, String companyId, Date applicationDate) {
         this.userId = userId;
         this.companyId = companyId;
         this.applicationDate = applicationDate;
