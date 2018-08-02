@@ -1,4 +1,4 @@
-package com.job-alert.domain;
+package com.jobalert.domain;
 
 public class Company {
     private String companyId;

@@ -1,4 +1,4 @@
-package com.job-alert.domain;
+package com.jobalert.domain;
 
 
 import  java.util.Date;
