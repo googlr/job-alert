@@ -22,8 +22,13 @@ import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
+import com.amazonaws.client.builder.AwsClientBuilder;
+
 public class JobAlert {
-    static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
+    //static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
+    static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(
+            new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-east-2"))
+            .build();
     static DynamoDB dynamoDB = new DynamoDB(client);
 
     static String tableName = "ExampleTable";
