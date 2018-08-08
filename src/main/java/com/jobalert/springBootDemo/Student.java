@@ -1,4 +1,4 @@
-package com.jobalert.springboot;
+package com.jobalert.springBootDemo;
 
 import java.util.Date;
 

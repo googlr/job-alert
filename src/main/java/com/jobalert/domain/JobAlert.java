@@ -33,7 +33,7 @@ public class JobAlert {
 
     static String tableName = "ExampleTable";
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
 
         createExampleTable();
         listMyTables();
@@ -41,7 +41,7 @@ public class JobAlert {
         updateExampleTable();
 
         deleteExampleTable();
-    }
+    }*/
 
     static void createExampleTable() {
 
