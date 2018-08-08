@@ -1,6 +1,7 @@
 package com.jobalert.springboot;
 
-
+import org.springframework.boot.SpringApplication;
+import java.util.HashMap;
 public class Application {
     public static HashMap<Long,Student> hmStudent;
 
