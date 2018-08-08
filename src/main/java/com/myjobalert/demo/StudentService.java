@@ -1,4 +1,4 @@
-package com.jobalert.springBootDemo;
+package com.myjobalert.demo;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

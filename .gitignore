@@ -1,4 +1,8 @@
-# 
+.mvn/
+mvnw
+mvnw.cmd
+
+#
 *.DS_Store
 
 #
@@ -108,3 +112,33 @@ modules.xml
 
 
 # End of https://www.gitignore.io/api/intellij
+
+
+
+
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
