@@ -14,6 +14,7 @@ public class DemoApplication {
 	}
 
 	public static HashMap<Long,Job> hmJob;
+	public static HashMap<Long,User> hmUser;
 
 	public static void main(String[] args) {
 		hmJob = new HashMap<Long,Job>();
@@ -48,5 +49,21 @@ public class DemoApplication {
 		hmJob.put(new Long(thirdJobInstance.getJobId()),thirdJobInstance);
 
 
+
+
+
+		hmUser = new HashMap<Long,User>();
+
+		User firstUserInstance = new User("0000000001",
+				"googlr",
+				"googlr@gmail.com"
+		);
+		hmUser.put(new Long(firstUserInstance.getUserId()),firstUserInstance);
+
+		User secondUserInstance = new User("0000000002",
+				"Kaira",
+				"kaira.Knightley@gmail.com"
+		);
+		hmUser.put(new Long(secondUserInstance.getUserId()),secondUserInstance);
 	}
 }
