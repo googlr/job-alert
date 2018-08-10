@@ -12,6 +12,10 @@ public class Job {
     private String jobCategory;
     private String jobEmploymentType;
 
+    // to-be added
+    // private String jobLocation City, State, Country
+    // private String jobStatus; //filled, closed, open, etc
+
     private Date jobPostDate;
 
     public Job(String jobId, String jobTitle, String jobCompany, String jobUrl, String jobCategory, String jobEmploymentType) {
