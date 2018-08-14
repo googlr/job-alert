@@ -19,9 +19,7 @@ class JobService{
     }
 
     @RequestMapping(value="/add",method = RequestMethod.POST)
-    public Job addJob(
-            //@RequestBody Job jobToAdd) {
-            @RequestParam(value="jobId") String jobId,
+    public Job addJob(@RequestParam(value="jobId") String jobId,
                       @RequestParam(value="jobTitle") String jobTitle,
                       @RequestParam(value="jobCompany") String jobCompany,
                       @RequestParam(value="jobUrl") String jobUrl,
