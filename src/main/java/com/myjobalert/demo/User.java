@@ -1,10 +1,11 @@
 package com.myjobalert.demo;
 
 public class User {
-    private final String userId;
+    private String userId;
     private String userName;
     private String userEmail;
 
+    public User(){}
 
     public User(String userId, String userName, String userEmail) {
         this.userId = userId;

@@ -4,7 +4,7 @@ import  java.util.Date;
 
 
 public class Job {
-    private final String jobId;
+    private String jobId;
     private String jobTitle;
     private String jobCompany;
     private String jobUrl;
@@ -17,6 +17,8 @@ public class Job {
     // private String jobStatus; //filled, closed, open, etc
 
     private Date jobPostDate;
+
+    public Job(){}
 
     public Job(String jobId, String jobTitle, String jobCompany, String jobUrl, String jobCategory, String jobEmploymentType) {
         this.jobId = jobId;
