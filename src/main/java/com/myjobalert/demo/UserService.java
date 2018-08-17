@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping(value="/rest/user")
-class UserService {
+class UserService implements UserServiceInterface {
     @RequestMapping(value="/",method = RequestMethod.GET)
     public HashMap<Long,User> getAllUsers(){
         return DemoApplication.hmUser;

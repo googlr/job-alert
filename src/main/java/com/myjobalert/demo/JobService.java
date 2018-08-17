@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping(value="/rest/job")
-class JobService{
+class JobService implements JobServiceInterface {
 
     @RequestMapping(value="/",method = RequestMethod.GET)
     public HashMap<Long,Job> getAllStudents(){
