@@ -70,6 +70,50 @@ public class DemoApplication {
 		}
 	}
 
+	private void loadSampleDateIntoDynamoDB(){
+		Job firstJobInstance = new Job("0000000001",
+				"Data Scientist/Quantitative Analyst, Engineering, University Graduate",
+				"Google",
+				"https://careers.google.com/jobs#!t=jo&jid=/google/data-scientist-quantitative-analyst-1600-amphitheatre-pkwy-mountain-view-ca-2495140088&",
+				"Software Engineering",
+				"Full-Time"
+		);
+
+		Job secondJobInstance = new Job("0000000002",
+				"Research Scientist, Google Brain (United States)",
+				"Google",
+				"https://careers.google.com/jobs#!t=jo&jid=/google/research-scientist-google-brain-united-76-9th-ave-new-york-ny-10011-usa-2144790060&",
+				"Software Engineering",
+				"Full-Time"
+		);
+
+		Job thirdJobInstance = new Job("0000000003",
+				"Technical Program Manager, University Graduate",
+				"Google",
+				"https://careers.google.com/jobs#!t=jo&jid=/google/technical-program-manager-university-1600-amphitheatre-pkwy-mountain-view-ca-3631710107&",
+				"Technical Infrastructure",
+				"Full-Time"
+		);
+
+		dynamoDBMapper.save(firstJobInstance);
+		dynamoDBMapper.save(secondJobInstance);
+		dynamoDBMapper.save(thirdJobInstance);
+
+
+		User firstUserInstance = new User("0000000001",
+				"googlr",
+				"googlr@gmail.com"
+		);
+
+		User secondUserInstance = new User("0000000002",
+				"Kaira",
+				"kaira.Knightley@gmail.com"
+		);
+
+		dynamoDBMapper.save(firstUserInstance);
+		dynamoDBMapper.save(secondUserInstance);
+	}
+
 	public static void main(String[] args) {
 
 		DemoApplication demoApplication = new DemoApplication();
@@ -77,6 +121,9 @@ public class DemoApplication {
 		// Create Job Table
 		//demoApplication.createTableInDynamoDB(User.class);
 		//demoApplication.createTableInDynamoDB(Job.class);
+
+		// Load Sample data into DynamoDB
+		// demoApplication.loadSampleDateIntoDynamoDB();
 
 		// Create User Table
 		// Create Job Table
@@ -88,34 +135,15 @@ public class DemoApplication {
 
 		hmJob = new HashMap<Long,Job>();
 
-		Job firstJobInstance = new Job("0000000001",
-			"Data Scientist/Quantitative Analyst, Engineering, University Graduate",
-				"Google",
-				"https://careers.google.com/jobs#!t=jo&jid=/google/data-scientist-quantitative-analyst-1600-amphitheatre-pkwy-mountain-view-ca-2495140088&",
-				"Software Engineering",
-				"Full-Time"
-		);
-		hmJob.put(new Long(firstJobInstance.getJobId()),firstJobInstance);
+
+		//hmJob.put(new Long(firstJobInstance.getJobId()),firstJobInstance);
 
 		SpringApplication.run(DemoApplication.class, args);
 
-		Job secondJobInstance = new Job("0000000002",
-				"Research Scientist, Google Brain (United States)",
-				"Google",
-				"https://careers.google.com/jobs#!t=jo&jid=/google/research-scientist-google-brain-united-76-9th-ave-new-york-ny-10011-usa-2144790060&",
-				"Software Engineering",
-				"Full-Time"
-		);
-		hmJob.put(new Long(secondJobInstance.getJobId()),secondJobInstance);
 
-		Job thirdJobInstance = new Job("0000000003",
-				"Technical Program Manager, University Graduate",
-				"Google",
-				"https://careers.google.com/jobs#!t=jo&jid=/google/technical-program-manager-university-1600-amphitheatre-pkwy-mountain-view-ca-3631710107&",
-				"Technical Infrastructure",
-				"Full-Time"
-				);
-		hmJob.put(new Long(thirdJobInstance.getJobId()),thirdJobInstance);
+		//hmJob.put(new Long(secondJobInstance.getJobId()),secondJobInstance);
+
+		//hmJob.put(new Long(thirdJobInstance.getJobId()),thirdJobInstance);
 
 
 
@@ -123,16 +151,8 @@ public class DemoApplication {
 
 		hmUser = new HashMap<Long,User>();
 
-		User firstUserInstance = new User("0000000001",
-				"googlr",
-				"googlr@gmail.com"
-		);
-		hmUser.put(new Long(firstUserInstance.getUserId()),firstUserInstance);
+		// hmUser.put(new Long(firstUserInstance.getUserId()),firstUserInstance);
 
-		User secondUserInstance = new User("0000000002",
-				"Kaira",
-				"kaira.Knightley@gmail.com"
-		);
-		hmUser.put(new Long(secondUserInstance.getUserId()),secondUserInstance);
+		// hmUser.put(new Long(secondUserInstance.getUserId()),secondUserInstance);
 	}
 }
