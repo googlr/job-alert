@@ -1,5 +1,19 @@
 package com.myjobalert.demo;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.CreateTableResult;
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
+import com.amazonaws.services.dynamodbv2.model.KeyType;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
+
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.HashMap;
@@ -16,7 +30,62 @@ public class DemoApplication {
 	public static HashMap<Long,Job> hmJob;
 	public static HashMap<Long,User> hmUser;
 
+
+	final AmazonDynamoDB dynamoDBClient;
+	final DynamoDBMapper dynamoDBMapper;
+
+	public DemoApplication(){
+		this.dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
+		this.dynamoDBMapper = new DynamoDBMapper(dynamoDBClient);
+
+	}
+
+	private void createTableInDynamoDB(Class<?> classT){
+		//final AmazonDynamoDB dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
+
+		//DynamoDBMapper mapper = new DynamoDBMapper(dynamoDBClient);
+
+		try {
+			CreateTableRequest req = dynamoDBMapper.generateCreateTableRequest(classT);
+			// Table provision throughput is still required since it cannot be specified in your POJO
+			req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
+			// Fire off the CreateTableRequest using the low-level client
+			CreateTableResult result = dynamoDBClient.createTable(req);
+
+			System.out.println(result.getTableDescription().getTableName());
+		} catch (AmazonServiceException e) {
+			System.err.println(e.getErrorMessage());
+			System.exit(1);
+		}
+
+		System.out.println("Create Table: %s.\n");
+	}
+
+	private void deleteTableInDynamoDB(String tableName){
+		try {
+			dynamoDBClient.deleteTable(tableName);
+		} catch (AmazonServiceException e) {
+			System.err.println(e.getErrorMessage());
+			System.exit(1);
+		}
+	}
+
 	public static void main(String[] args) {
+
+		DemoApplication demoApplication = new DemoApplication();
+		// Create User Table
+		// Create Job Table
+		//demoApplication.createTableInDynamoDB(User.class);
+		//demoApplication.createTableInDynamoDB(Job.class);
+
+		// Create User Table
+		// Create Job Table
+		//demoApplication.deleteTableInDynamoDB("User");
+		//demoApplication.deleteTableInDynamoDB("Job");
+
+
+
+
 		hmJob = new HashMap<Long,Job>();
 
 		Job firstJobInstance = new Job("0000000001",
