@@ -2,7 +2,12 @@ package com.myjobalert.demo;
 
 import  java.util.Date;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+@DynamoDBTable(tableName="Job")
 public class Job {
     private String jobId;
     private String jobTitle;
@@ -32,10 +37,12 @@ public class Job {
         this.jobPostDate = new Date();
     }
 
+    @DynamoDBHashKey(attributeName="jobId")
     public String getJobId(){
         return this.jobId;
     }
 
+    @DynamoDBAttribute(attributeName="jobTitle")
     public String getJobTitle(){
         return this.jobTitle;
     }
@@ -44,6 +51,7 @@ public class Job {
         this.jobTitle = jobTitle;
     }
 
+    @DynamoDBAttribute(attributeName="jobCompany")
     public String getJobCompany(){
         return this.jobCompany;
     }
@@ -52,6 +60,7 @@ public class Job {
         this.jobCompany = jobCompany;
     }
 
+    @DynamoDBAttribute(attributeName="jobUrl")
     public String getjobUrl(){
         return this.jobUrl;
     }
@@ -60,6 +69,7 @@ public class Job {
         this.jobUrl = jobUrl;
     }
 
+    @DynamoDBAttribute(attributeName="jobCategory")
     public String getJobCategory(){
         return this.jobCategory;
     }
@@ -68,6 +78,7 @@ public class Job {
         this.jobCategory = jobCategory;
     }
 
+    @DynamoDBAttribute(attributeName="jobEmploymentType")
     public String getJobEmploymentType(){
         return this.jobEmploymentType;
     }
@@ -76,6 +87,7 @@ public class Job {
         this.jobEmploymentType = jobEmploymentType;
     }
 
+    @DynamoDBAttribute(attributeName="jobPostDate")
     public Date getJobPostDate(){
         return this.jobPostDate;
     }
@@ -91,6 +103,7 @@ public class Job {
     // toString()
     // hashCode()
 
+    @DynamoDBIgnore
     @Override
     public String toString(){
         return "Job {" +
