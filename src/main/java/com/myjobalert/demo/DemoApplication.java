@@ -31,12 +31,12 @@ public class DemoApplication {
 	public static HashMap<Long,User> hmUser;
 
 
-	final AmazonDynamoDB dynamoDBClient;
-	final DynamoDBMapper dynamoDBMapper;
+	private static AmazonDynamoDB dynamoDBClient;
+	public static DynamoDBMapper dynamoDBMapper;
 
 	public DemoApplication(){
-		this.dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
-		this.dynamoDBMapper = new DynamoDBMapper(dynamoDBClient);
+		//this.dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
+		//this.dynamoDBMapper = new DynamoDBMapper(dynamoDBClient);
 
 	}
 
@@ -116,7 +116,12 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 
-		DemoApplication demoApplication = new DemoApplication();
+		dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
+		dynamoDBMapper = new DynamoDBMapper(dynamoDBClient);
+
+		SpringApplication.run(DemoApplication.class, args);
+
+		// DemoApplication demoApplication = new DemoApplication();
 		// Create User Table
 		// Create Job Table
 		//demoApplication.createTableInDynamoDB(User.class);
@@ -137,9 +142,6 @@ public class DemoApplication {
 
 
 		//hmJob.put(new Long(firstJobInstance.getJobId()),firstJobInstance);
-
-		SpringApplication.run(DemoApplication.class, args);
-
 
 		//hmJob.put(new Long(secondJobInstance.getJobId()),secondJobInstance);
 
