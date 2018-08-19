@@ -19,4 +19,6 @@ public interface JobServiceInterface {
     boolean deleteJob( long id) throws Exception;
 
     Job getJob( long id);
+
+    List<Job> searchJob( String searchInput );
 }

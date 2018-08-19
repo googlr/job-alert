@@ -29,7 +29,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(value="/rest/job")
@@ -100,5 +100,30 @@ class JobService implements JobServiceInterface {
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public Job getJob(@PathVariable long id){
         return DemoApplication.dynamoDBMapper.load(Job.class, String.valueOf(id));
+    }
+
+
+    @RequestMapping(value="/search",method = RequestMethod.POST)
+    public List<Job> searchJob(@RequestParam(value="searchInput") String searchInput ) {
+
+        String[] keywords = searchInput.trim().split(" ");
+        Set<Job> searchResult = new HashSet<>();
+
+        for( String keyword : keywords ){
+            Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+            eav.put(":keyword", new AttributeValue().withS(keyword));
+
+            DynamoDBQueryExpression<Job> queryExpression = new DynamoDBQueryExpression<Job>()
+                    .withKeyConditionExpression("contains(jobId, :keyword) or contains(jobTitle, :keyword) or contains(jobCompany, :keyword) or contains(jobUrl, :keyword) or contains(jobCategory, :keyword) or contains(jobEmploymentType, :keyword)")
+                    .withExpressionAttributeValues(eav);
+
+            List<Job> latestResults = DemoApplication.dynamoDBMapper.query(Job.class, queryExpression);
+            searchResult.addAll( latestResults );
+        }
+
+        List<Job> searchResultList = new LinkedList<Job>();
+        searchResultList.addAll(searchResult);
+
+        return searchResultList;
     }
 }
