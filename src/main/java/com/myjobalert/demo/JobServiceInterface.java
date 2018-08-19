@@ -1,10 +1,10 @@
 package com.myjobalert.demo;
 
-import java.util.HashMap;
+import java.util.List;
 
 public interface JobServiceInterface {
 
-    HashMap<Long,Job> getAllStudents();
+    List<Job> getAllJobs();
 
     Job addJob(String jobId,
                String jobTitle,
@@ -16,7 +16,7 @@ public interface JobServiceInterface {
     Job updateJob(Job jobToUpdate) throws Exception;
 
 
-    Job deleteJob( long id) throws Exception;
+    boolean deleteJob( long id) throws Exception;
 
-    Job getStudent( long id);
+    Job getJob( long id);
 }

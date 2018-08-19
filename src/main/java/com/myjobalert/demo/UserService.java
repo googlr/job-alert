@@ -7,14 +7,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.HashMap;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
+
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/rest/user")
 class UserService implements UserServiceInterface {
     @RequestMapping(value="/",method = RequestMethod.GET)
-    public HashMap<Long,User> getAllUsers(){
-        return DemoApplication.hmUser;
+    public List<User> getAllUsers(){
+        List<User> userList = DemoApplication.dynamoDBMapper.scan(User.class, new DynamoDBScanExpression());
+
+        return userList;
     }
 
     @RequestMapping(value="/add",method = RequestMethod.POST)
@@ -24,15 +47,17 @@ class UserService implements UserServiceInterface {
             //,@RequestParam(value="subject",defaultValue = "unknown") String subject){
 
         User userToAdd=new User(userId, userName, userEmail);
-        DemoApplication.hmUser.put(new Long(userToAdd.getUserId()),userToAdd);
+//        DemoApplication.hmUser.put(new Long(userToAdd.getUserId()),userToAdd);
+        DemoApplication.dynamoDBMapper.save(userToAdd);
         return userToAdd;
     }
 
     @RequestMapping(value="/update",method = RequestMethod.PUT)
     public User updateUser(@RequestBody User userToUpdate) throws Exception {
 
-        if(DemoApplication.hmUser.containsKey(new Long(userToUpdate.getUserId()))){
-            DemoApplication.hmUser.put(new Long(userToUpdate.getUserId()),userToUpdate);
+        User userToBeUpdated = DemoApplication.dynamoDBMapper.load( userToUpdate );
+        if( userToBeUpdated != null ){
+            DemoApplication.dynamoDBMapper.save( userToUpdate );
         }else{
             throw new Exception("User "+userToUpdate.getUserId()+" does not exists");
         }
@@ -42,21 +67,32 @@ class UserService implements UserServiceInterface {
 
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public User deleteUser(@PathVariable long id) throws Exception {
+    public boolean deleteUser(@PathVariable long id) throws Exception {
 
-        User userToDelete;
+        DynamoDB dynamoDB = new DynamoDB(DemoApplication.dynamoDBClient);
 
-        if(DemoApplication.hmUser.containsKey(new Long(id))){
-            userToDelete = DemoApplication.hmUser.get(new Long(id));
-            DemoApplication.hmUser.remove(new Long(id));
-        }else{
-            throw new Exception("User "+id+" does not exists");
+        Table table = dynamoDB.getTable("User");
+
+        DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                .withPrimaryKey(new PrimaryKey("userId", String.valueOf(id) ));
+        // Conditional delete
+
+        try {
+            System.out.println("Attempting a conditional delete...");
+            table.deleteItem(deleteItemSpec);
+            System.out.println("DeleteItem succeeded");
+            return true;
         }
-        return userToDelete;
+        catch (Exception e) {
+            System.err.println("Unable to delete item: %s" + String.valueOf(id) );
+            System.err.println(e.getMessage());
+            return false;
+        }
+
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public User getUser(@PathVariable long id){
-        return DemoApplication.hmUser.get(new Long(id));
+        return DemoApplication.dynamoDBMapper.load(User.class, String.valueOf(id));
     }
 }

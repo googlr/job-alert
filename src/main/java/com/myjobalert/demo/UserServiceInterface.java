@@ -1,9 +1,9 @@
 package com.myjobalert.demo;
 
-import java.util.HashMap;
+import java.util.List;
 
 public interface UserServiceInterface {
-    HashMap<Long,User> getAllUsers();
+    public List<User> getAllUsers();
 
     User addUser(String userId,
                  String userName,
@@ -11,7 +11,7 @@ public interface UserServiceInterface {
 
     User updateUser(User userToUpdate) throws Exception;
 
-    User deleteUser(long id) throws Exception;
+    boolean deleteUser(long id) throws Exception;
 
     User getUser(long id);
 }

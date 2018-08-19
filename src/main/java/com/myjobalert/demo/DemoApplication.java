@@ -27,11 +27,11 @@ public class DemoApplication {
 		return "to-do";
 	}
 
-	public static HashMap<Long,Job> hmJob;
-	public static HashMap<Long,User> hmUser;
+//	public static HashMap<Long,Job> hmJob;
+//	public static HashMap<Long,User> hmUser;
 
 
-	private static AmazonDynamoDB dynamoDBClient;
+	public static AmazonDynamoDB dynamoDBClient;
 	public static DynamoDBMapper dynamoDBMapper;
 
 	public DemoApplication(){
@@ -138,23 +138,17 @@ public class DemoApplication {
 
 
 
-		hmJob = new HashMap<Long,Job>();
-
-
-		//hmJob.put(new Long(firstJobInstance.getJobId()),firstJobInstance);
-
-		//hmJob.put(new Long(secondJobInstance.getJobId()),secondJobInstance);
-
-		//hmJob.put(new Long(thirdJobInstance.getJobId()),thirdJobInstance);
+		// hmJob = new HashMap<Long,Job>();
+		// hmJob.put(new Long(firstJobInstance.getJobId()),firstJobInstance);
+		// hmJob.put(new Long(secondJobInstance.getJobId()),secondJobInstance);
+		// hmJob.put(new Long(thirdJobInstance.getJobId()),thirdJobInstance);
 
 
 
 
 
-		hmUser = new HashMap<Long,User>();
-
+		// hmUser = new HashMap<Long,User>();
 		// hmUser.put(new Long(firstUserInstance.getUserId()),firstUserInstance);
-
 		// hmUser.put(new Long(secondUserInstance.getUserId()),secondUserInstance);
 	}
 }
