@@ -11,7 +11,7 @@ public interface UserServiceInterface {
 
     User updateUser(User userToUpdate) throws Exception;
 
-    boolean deleteUser(long id) throws Exception;
+    boolean deleteUser(String id) throws Exception;
 
-    User getUser(long id);
+    User getUser(String id);
 }

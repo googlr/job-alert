@@ -67,14 +67,14 @@ class UserService implements UserServiceInterface {
 
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public boolean deleteUser(@PathVariable long id) throws Exception {
+    public boolean deleteUser(@PathVariable String id) throws Exception {
 
         DynamoDB dynamoDB = new DynamoDB(DemoApplication.dynamoDBClient);
 
         Table table = dynamoDB.getTable("User");
 
         DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                .withPrimaryKey(new PrimaryKey("userId", String.valueOf(id) ));
+                .withPrimaryKey(new PrimaryKey("userId", id ));
         // Conditional delete
 
         try {
@@ -84,7 +84,7 @@ class UserService implements UserServiceInterface {
             return true;
         }
         catch (Exception e) {
-            System.err.println("Unable to delete item: %s" + String.valueOf(id) );
+            System.err.println("Unable to delete item: %s" + id );
             System.err.println(e.getMessage());
             return false;
         }
@@ -92,7 +92,9 @@ class UserService implements UserServiceInterface {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public User getUser(@PathVariable long id){
-        return DemoApplication.dynamoDBMapper.load(User.class, String.valueOf(id));
+    public User getUser(@PathVariable String id){
+
+        // return value could be null
+        return DemoApplication.dynamoDBMapper.load(User.class, id);
     }
 }

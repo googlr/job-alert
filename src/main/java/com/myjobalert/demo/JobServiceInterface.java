@@ -16,9 +16,9 @@ public interface JobServiceInterface {
     Job updateJob(Job jobToUpdate) throws Exception;
 
 
-    boolean deleteJob( long id) throws Exception;
+    boolean deleteJob(String id) throws Exception;
 
-    Job getJob( long id);
+    Job getJob(String id);
 
-    List<Job> searchJob( String searchInput );
+    List<Job> searchJob(String searchInput);
 }

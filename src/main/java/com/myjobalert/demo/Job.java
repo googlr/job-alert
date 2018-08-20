@@ -41,6 +41,7 @@ public class Job {
     public String getJobId(){
         return this.jobId;
     }
+    public void setJobId(String jobId) { this.jobId = jobId; }
 
     @DynamoDBAttribute(attributeName="jobTitle")
     public String getJobTitle(){
@@ -92,7 +93,7 @@ public class Job {
         return this.jobPostDate;
     }
 
-    public void setJobTitle(Date jobPostDate){
+    public void setJobPostDate(Date jobPostDate){
         this.jobPostDate = jobPostDate;
     }
 

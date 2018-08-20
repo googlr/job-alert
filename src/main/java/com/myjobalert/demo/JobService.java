@@ -74,14 +74,14 @@ class JobService implements JobServiceInterface {
 
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public boolean deleteJob(@PathVariable long id) throws Exception {
+    public boolean deleteJob(@PathVariable String id) throws Exception {
 
         DynamoDB dynamoDB = new DynamoDB(DemoApplication.dynamoDBClient);
 
         Table table = dynamoDB.getTable("Job");
 
         DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                .withPrimaryKey(new PrimaryKey("jobId", String.valueOf(id) ));
+                .withPrimaryKey(new PrimaryKey("jobId", id ));
         // Conditional delete
 
         try {
@@ -91,15 +91,15 @@ class JobService implements JobServiceInterface {
             return true;
         }
         catch (Exception e) {
-            System.err.println("Unable to delete item: %s" + String.valueOf(id) );
+            System.err.println("Unable to delete item: %s" + id );
             System.err.println(e.getMessage());
             return false;
         }
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public Job getJob(@PathVariable long id){
-        return DemoApplication.dynamoDBMapper.load(Job.class, String.valueOf(id));
+    public Job getJob(@PathVariable String id){
+        return DemoApplication.dynamoDBMapper.load(Job.class, id);
     }
 
 
@@ -113,11 +113,15 @@ class JobService implements JobServiceInterface {
             Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
             eav.put(":keyword", new AttributeValue().withS(keyword));
 
-            DynamoDBQueryExpression<Job> queryExpression = new DynamoDBQueryExpression<Job>()
-                    .withKeyConditionExpression("contains(jobId, :keyword) or contains(jobTitle, :keyword) or contains(jobCompany, :keyword) or contains(jobUrl, :keyword) or contains(jobCategory, :keyword) or contains(jobEmploymentType, :keyword)")
+            DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                    .withFilterExpression("contains(jobId, :keyword) or contains(jobTitle, :keyword) or contains(jobCompany, :keyword) or contains(jobUrl, :keyword) or contains(jobCategory, :keyword) or contains(jobEmploymentType, :keyword)")
                     .withExpressionAttributeValues(eav);
+//            List<Book> scanResult = mapper.scan(Book.class, scanExpression);
+//            DynamoDBQueryExpression<Job> queryExpression = new DynamoDBQueryExpression<Job>()
+//                    .withFilterExpression("contains(jobId, :keyword) or contains(jobTitle, :keyword) or contains(jobCompany, :keyword) or contains(jobUrl, :keyword) or contains(jobCategory, :keyword) or contains(jobEmploymentType, :keyword)")
+//                    .withExpressionAttributeValues(eav);
 
-            List<Job> latestResults = DemoApplication.dynamoDBMapper.query(Job.class, queryExpression);
+            List<Job> latestResults = DemoApplication.dynamoDBMapper.scan(Job.class, scanExpression);
             searchResult.addAll( latestResults );
         }
 

@@ -25,6 +25,7 @@ public class User {
     public String getUserId(){
         return userId;
     }
+    public void setUserId(String userId) { this.userId = userId; }
 
     @DynamoDBAttribute(attributeName="userName")
     public String getUserName(){
