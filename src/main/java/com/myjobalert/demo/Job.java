@@ -11,13 +11,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 public class Job {
     private String jobId;
     private String jobTitle;
-    private String jobCompany;
+    private String jobCompany; // ORGANIZATION NAME	
     private String jobUrl;
 
-    private String jobCategory;
+    private String jobCategory; // AREA OF HIRE/INDUSTRY
     private String jobEmploymentType;
 
     // to-be added
+    // EMPLOYMENT VISA SPONSORSHIP
+    // DESIRED CLASS LEVEL/DEGREE LEVEL
     // private String jobLocation City, State, Country
     // private String jobStatus; //filled, closed, open, etc
 
